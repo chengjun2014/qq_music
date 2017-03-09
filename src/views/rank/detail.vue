@@ -15,13 +15,13 @@
 
 		<ul class="list" :style="{backgroundColor: color}">
 		<template v-for="(list, index) in songlist">
-			<song-list :listdata=list.data :listindex=index></song-list>	
+			<song-list :listdata=list.data :listindex=index></song-list>
 		</template>
 		</ul>
 	</div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 	import SongList from '../../components/song-list'
 
 	export default {
@@ -42,7 +42,7 @@
 				}
 				if (t) {
 					var o = (16711680 & t) >> 16, a = (65280 & t) >> 8, i = 255 & t;
-					
+
 					var s = n(o) + n(a) + n(i);
 					this.color = '#' + s;
 				} else {

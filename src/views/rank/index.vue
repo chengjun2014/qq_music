@@ -22,7 +22,7 @@
 	</div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 	import HeadComp from '../../components/header/index'
 
 	export default {
@@ -69,6 +69,7 @@
 	}
 	.top-img-wrap {
 		flex: none;
+
 		.top-img {
 			width: 5rem;
 			height: 5rem;
@@ -90,7 +91,7 @@
 		a {
 			margin-bottom: 0.5rem;
 			background-color: #fff;
-			display: -webkit-box; 
+			display: -webkit-box;
 		    display: -webkit-flex;
 		    display: flex;
 		    font-size: 0.7rem;
@@ -108,14 +109,14 @@
 			    h3 {
 			    	font-size: 0.8rem;
 			    	white-space: nowrap;
-			    	overflow: hidden; 
+			    	overflow: hidden;
 			    	text-overflow: ellipsis;
 			    	line-height: 1.8em;
 			    	margin-bottom: 0.3rem;
 			    }
 			    p {
 			    	white-space: nowrap;
-			    	overflow: hidden; 
+			    	overflow: hidden;
 			    	text-overflow: ellipsis;
 			    	span {
 			    		color: rgba(0, 0, 0, .5);
@@ -135,7 +136,7 @@
 		    }
 		}
 
-		
+
 		.top-summary {
 			flex: 1;
 			width: 0;
@@ -154,3 +155,4 @@
 		margin-bottom: 0;
 	}
 </style>
+

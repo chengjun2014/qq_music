@@ -25,7 +25,7 @@
 			</li>
 		</ul>
 	</div>
-	
+
 	<div class="section-wrap">
 		<h3 class="sub-title">热门歌单</h3>
 	</div>
@@ -79,7 +79,7 @@
 			    this.radioList = response.data.data.radioList;
 			})
 		},
-		
+
 		mounted () {
 
 		}

@@ -17,9 +17,6 @@
 					<a href="" v-if="item.k.length > 4">{{item.k}}</a>
 				</template>
 			</div>
-			
-			<p v-if="part">12</p>
-			<p v-else>34</p>
 		</div>
 	</div>
 </template>
@@ -31,7 +28,7 @@
 		data () {
 	      return {
 	        hotkeys: [],
-	        part: true, // 搜索标志位，默认0 显示热搜词列表 1显示搜索历史记录
+          showHistory: true, // 搜索标志位，默认0 显示热搜词列表 1显示搜索历史记录
 	        special_key: ''
 	      }
 	    },
@@ -40,8 +37,7 @@
 		},
 		methods: {
 			change: function() {
-				console.log(this.part)
-				this.part = !this.part;
+				this.showHistory = !this.showHistory;
 			}
 		},
 		beforeMount () {
@@ -70,14 +66,14 @@
 	.search-wrap {
 		background-color: #f4f4f4;
 		padding: 10px;
-		display: -webkit-box; 
+		display: -webkit-box;
 	    display: -webkit-flex;
 	    display: flex;
 		form {
 			background-color: #fff;
 			position: relative;
 			padding-left: 1rem;
-			display: -webkit-box; 
+			display: -webkit-box;
 		    display: -webkit-flex;
 		    display: flex;
 		    -webkit-box-align: center;
