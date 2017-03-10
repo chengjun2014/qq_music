@@ -15,11 +15,13 @@
 		</div>
 
     <div class="lyc-wrap">
-      <ul>
-      <template v-for="lycItem in lycArr">
-        <lyc-item :lyc=lycItem></lyc-item>
-      </template>
-      </ul>
+      <div class="lyc">
+        <ul>
+        <template v-for="(lycItem, index) in lycArr">
+          <lyc-item :lyc=lycItem :index=index></lyc-item>
+        </template>
+        </ul>
+      </div>
     </div>
 
     <div class="controller">
@@ -137,7 +139,9 @@
 	    opacity: 0.6;
 	}
 	.song_info {
-		position: relative;
+		position: fixed;
+    width: 100%;
+    box-sizing: border-box;
 		z-index: 3;
 		color: #fff;
 		padding: 0.75rem;
@@ -185,17 +189,37 @@
 	}
 
   .lyc-wrap {
-    position: relative;
+    position: fixed;
+    top:5.5rem;
+    bottom: 8rem;
+    width: 100%;
     z-index: 10;
     color: rgba(255,255,255,.6);
     text-align: center;
     line-height: 2rem;
     font-size: 0.8rem;
     -webkit-box-flex: 1;
-    height: 0;
+    overflow: hidden;
+    display: flex;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    .lyc {
+      height: 16rem;
+      width: 100%;
+      overflow: hidden;
+      ul, li {
+        width: 100%;
+      }
+    }
   }
 
   .controller {
     height: 8rem;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.3);
   }
 </style>
