@@ -25,5 +25,9 @@ npm run build --report
 
 工作间隙里做的，希望跟大家共同进步
 
+## 前端vue交流群 38518473
+
+> 有问题直接找群主 
+
 ## 案例截图
 ![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
