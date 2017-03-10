@@ -17,5 +17,13 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+进度太慢，还没有完成
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+歌词部分已经获取到了还没有渲染到页面上
+
+歌曲可以正常播放
+
+工作间隙里做的，希望跟大家共同进步
+
+## 案例截图
+![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
