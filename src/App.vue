@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  
+
 }
 </script>
 
@@ -20,6 +20,9 @@ body, h1, h2, h3, p {
 }
 a {
   text-decoration: none;
+}
+li {
+  list-style: none;
 }
 .f-fl {
   float: left;
