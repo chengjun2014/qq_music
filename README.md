@@ -1,6 +1,6 @@
-# qq_music_spa
+# 一个假的qq音乐demo qq_music_spa
 
-> A Vue.js project
+> 我可能做了一个假的qq音乐demo， 本demo参考`https://y.qq.com`开发的，难怪跟网上其他人的案例界面不一样。。。Orz
 
 ## Build Setup
 
