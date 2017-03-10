@@ -3,7 +3,7 @@
 	<head-comp></head-comp>
 	<div id="main">
 		<swiper class="my-swipe">
-		  <swiper-slide class="silde" v-for="item in sliderData">
+		  <swiper-slide class="silde" v-for="item in sliderData" :key="item.alt">
 		    <a v-bind:href="item.href">
 		      <img :src=item.src :alt=item.alt />
 		    </a>
