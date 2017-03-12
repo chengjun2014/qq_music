@@ -2,9 +2,11 @@
 	<div class="song-wrap">
 		<div class="song-bg" :style="bodyStyle"></div>
 		<div class="song-mask"></div>
-		<audio :src='songUrl' autoplay="autoplay" id="audio"></audio>
+		<audio :src='songUrl' autoplay="autoplay" ref="audio"></audio>
 		<div class="song_info">
-			<img :src="pic" alt="" class="album-cover">
+			<div class="album-cover-wrap">
+				<img :src="pic" alt="" class="album-cover" :class="[isPlaying ? 'rotateAnim' : '']" ref="album">
+			</div>
 			<div class="info">
 				<h1 class="nowrap">{{playingsong.songname}}</h1>
 				<p>
@@ -14,31 +16,26 @@
 			<span class="icon" :class="[isPlaying ? 'play-icon' : 'pause-icon']" @click="palyOrPause"></span>
 		</div>
 
-    <div class="lyc-wrap">
-      <div class="lyc">
-        <ul>
-        <template v-for="(lycItem, index) in lycArr">
-          <lyc-item :lyc=lycItem :index=index></lyc-item>
-        </template>
-        </ul>
-      </div>
-    </div>
+	    <div class="lyc-wrap">
+	      	<lyc-item :lycArr="lycArr"></lyc-item>
+	    </div>
 
-    <div class="controller">
+	    <div class="controller">
 
-    </div>
+	    </div>
 	</div>
 </template>
 
 <script>
 	import Base64 from '../base64'
 	import store from '../vuex/store'
-  import LycItem from './lyc-item'
+  	import LycItem from './lyc-item'
 
 	export default {
 		data () {
-      let song = store.getters.getSong,
-          pic = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
+      		let song = store.getters.getSong,
+          		pic = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
+
 			return {
 				songId: this.$route.params.songid,
 				playingsong: song,
@@ -48,13 +45,13 @@
 					fontSize: '12px'
 				},
 				isPlaying: true,
-        pic: pic,
-        lycArr: []
+		        pic: pic,
+		        lycArr: []
 			}
 		},
 		components:{
 			Base64,
-      LycItem
+      		LycItem
 		},
 		computed: {
 			songUrl: function () {
@@ -66,14 +63,15 @@
 		},
 		methods: {
 			palyOrPause: function () {
-			    let audio = document.getElementById('audio');
+			    let audio = this.$refs.audio;
 				if (this.isPlaying) {
-          audio.pause();
+          			audio.pause();
 				} else {
-          audio.play();
+          			audio.play();
 				}
 				this.isPlaying = !this.isPlaying;
-				console.log(audio.duration, audio.currentTime, audio)
+				console.log(audio.duration, audio.currentTime);
+
 			}
 		},
 		beforeMount () {
@@ -81,35 +79,35 @@
 
 			let getTime = function (time) {
 			    let secArr = time.split('.'),
-              secArr2 = secArr[0].split(':'),
-              sec = +secArr2[0] * 60 + secArr2[1] * 1;
-          return sec + '.' + secArr[1]
-      }
+              		secArr2 = secArr[0].split(':'),
+              		sec = +secArr2[0] * 60 + secArr2[1] * 1;
+          		return sec + '.' + secArr[1]
+      		}
 
-      let _this = this;
+      		let _this = this;
 
 			this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.songId , {
-			  jsonp: 'callback'
-			}).then(function (response) {
-          Base64.decode(response.data.lyric)
-              .split('[')
-              .slice(7)
-              .map(function(str) {
-                  var t = str.split(']');
-                  if (t[1].length > 1) {
-                    _this.lycArr.push({
-                        time: getTime(t[0]),
-                        lyc: t[1]
-                    });
-                  }
-              }
-          )
+			  	jsonp: 'callback'
+			})
+			.then(function (response) {
+          		Base64.decode(response.data.lyric)
+              		.split('[')
+              		.slice(7)
+              		.map(function(str) {
+		                var t = str.split(']');
+		                if (t[1].length > 1) {
+		                    _this.lycArr.push({
+		                        time: getTime(t[0]),
+		                        lyc: t[1]
+		                    });
+		                }
+              		})
 			});
 		}
 	}
 </script>
 
-<style lang="less">
+<style lang='less'>
   html, body {
     height: 100%;
   }
@@ -140,8 +138,8 @@
 	}
 	.song_info {
 		position: fixed;
-    width: 100%;
-    box-sizing: border-box;
+	    width: 100%;
+	    box-sizing: border-box;
 		z-index: 3;
 		color: #fff;
 		padding: 0.75rem;
@@ -152,19 +150,27 @@
 	    -webkit-align-items: center;
 	    align-items: center;
 	    background-color: rgba(0,0,0,.1);
-		.album-cover {
+
+		.album-cover-wrap {
 			width: 4rem;
 			height: 4rem;
 			margin-right: 0.75rem;
-      border-radius: 50%;
+		}
+
+		.album-cover {
+			width: 4rem;
+			height: 4rem;
+      		border-radius: 50%;
+      		transform:rotate(0deg);
+      		transition: transform 200ms;
 		}
 		.info {
 			-webkit-box-flex: 1;
-			-webklit-flex: 1;
+			-webkit-flex: 1;
 			flex: 1;
 			width: 0;
 			font-size: 0.7rem;
-      line-height: 1.35rem;
+      		line-height: 1.35rem;
 			h1 {
 				font-size: 0.9rem;
 				font-weight: normal;
@@ -203,14 +209,11 @@
     display: flex;
     display: -webkit-box;
     -webkit-box-align: center;
-    .lyc {
-      height: 16rem;
-      width: 100%;
-      overflow: hidden;
-      ul, li {
-        width: 100%;
-      }
-    }
+    
+  }
+
+  .rotateAnim {
+  	animation: mymove 4s infinite linear;
   }
 
   .controller {
@@ -222,4 +225,10 @@
     box-sizing: border-box;
     background: rgba(0,0,0,0.3);
   }
+
+@keyframes mymove{
+	0% {transform:rotate(0deg);}
+	50% {transform:rotate(180deg);}
+	100% {transform:rotate(360deg);}
+}
 </style>

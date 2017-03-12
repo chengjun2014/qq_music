@@ -22,7 +22,7 @@
 	</div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 	import HeadComp from '../../components/header/index'
 
 	export default {
