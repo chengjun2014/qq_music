@@ -27,9 +27,9 @@
 
 	export default {
 		data () {
-	      return {
-	        topList: []
-	      }
+			return {
+				topList: []
+			}
 	    },
 		components: {
 			HeadComp
@@ -37,7 +37,6 @@
 		filters: {
 			smaller: function (num) {
 				if (num) {
-					console.log(num);
 					return (num/10000).toFixed(1) + '万'
 				}
 			}
@@ -135,7 +134,6 @@
 			    }
 		    }
 		}
-
 
 		.top-summary {
 			flex: 1;

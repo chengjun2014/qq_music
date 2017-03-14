@@ -14,14 +14,14 @@
 		</div>
 
 		<ul class="list" :style="{backgroundColor: color}">
-		<template v-for="(list, index) in songlist">
-			<song-list :listdata=list.data :listindex=index></song-list>
-		</template>
+			<template v-for="(list, index) in songlist">
+				<song-list :listdata=list.data :listindex=index></song-list>
+			</template>
 		</ul>
 	</div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 	import SongList from '../../components/song-list'
 
 	export default {

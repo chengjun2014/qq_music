@@ -8,7 +8,7 @@
 				<img :src="pic" alt="" class="album-cover" :class="[isPlaying ? 'rotateAnim' : '']" ref="album">
 			</div>
 			<div class="info">
-				<h1 class="nowrap">{{playingsong.songname}}</h1>
+				<h1 class="nowrap">{{playingsong.songname}}{{cTime}}</h1>
 				<p>
 				<template v-for="item in playingsong.singer">{{item.name}}&nbsp;</template>
 				</p>
@@ -17,7 +17,7 @@
 		</div>
 
 	    <div class="lyc-wrap">
-	      	<lyc-item :lycArr="lycArr"></lyc-item>
+	      	<lyc-item :lycArr="lycArr" :tiem="currentTime"></lyc-item>
 	    </div>
 
 	    <div class="controller">
@@ -35,7 +35,7 @@
 		data () {
       		let song = store.getters.getSong,
           		pic = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
-
+      		
 			return {
 				songId: this.$route.params.songid,
 				playingsong: song,
@@ -46,9 +46,14 @@
 				},
 				isPlaying: true,
 		        pic: pic,
-		        lycArr: []
+		        lycArr: [],
+		        totalTime: song.interval,
+		        currentTime: 0
 			}
 		},
+	    watch: {
+
+	    },
 		components:{
 			Base64,
       		LycItem
@@ -56,6 +61,10 @@
 		computed: {
 			songUrl: function () {
 				return 'http://ws.stream.qqmusic.qq.com/'+this.songId+'.m4a?fromtag=46';
+			},
+			cTime: function() {
+				console.log('ctime', this.$refs, 123);
+				//return this.$refs.audio.currentTime;
 			}
 		},
 		props: {
@@ -70,8 +79,7 @@
           			audio.play();
 				}
 				this.isPlaying = !this.isPlaying;
-				console.log(audio.duration, audio.currentTime);
-
+				console.log(audio.duration, audio.currentTime, this.currentTime);
 			}
 		},
 		beforeMount () {
@@ -103,7 +111,11 @@
 		                }
               		})
 			});
-		}
+		},
+	    mounted() {
+			let len = this.lycArr.length - 1;
+			console.log(this.lycArr[len], len)
+	    }
 	}
 </script>
 
@@ -209,7 +221,7 @@
     display: flex;
     display: -webkit-box;
     -webkit-box-align: center;
-    
+
   }
 
   .rotateAnim {

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
   export default {
       props: {
           lycArr: {
@@ -29,18 +28,20 @@
     width: 100%;
     overflow: hidden;
     position: relative;
+
     .lyc-wrap-inner {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      p {
-        padding: 0 1rem;
-        box-sizing: border-box;
-      }
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        p {
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
     }
-    
 }
+
 .lyc-active {
     color: #31c27c;
 }
