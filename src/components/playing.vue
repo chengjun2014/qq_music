@@ -114,7 +114,7 @@
 		},
 	    mounted() {
 			let len = this.lycArr.length - 1;
-			console.log(this.lycArr[len], len)
+			console.log(len)
 	    }
 	}
 </script>

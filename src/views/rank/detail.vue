@@ -15,7 +15,7 @@
 
 		<ul class="list" :style="{backgroundColor: color}">
 			<template v-for="(list, index) in songlist">
-				<song-list :listdata=list.data :listindex=index></song-list>
+				<song-list :listdata="list.data" :listindex="index"></song-list>
 			</template>
 		</ul>
 	</div>

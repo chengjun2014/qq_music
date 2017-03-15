@@ -8,11 +8,11 @@
 					@keyup='checkKeyword' placeholder="搜索歌曲、歌单、专辑" v-model="keyword">
 				<span class="icon icon-del" @click="clearKeyword" v-show='showDel'></span>
 			</form>
-			<div class="search-btn" @click="search" v-show="showHistory">搜索</div>
+			<div class="search-btn" @click="search" v-show="focusFlag">搜索</div>
 		</div>
 
 	    <div class="search-main">
-			<div class="hot-keys" v-if="showHistory == false">
+			<div class="hot-keys" v-if="focusFlag == false">
 				<h3 class="hot-title">热门搜索</h3>
 				<div class="hot-wrap">
 					<a href="" class="highlight" v-if="special_key">{{special_key}}</a>
@@ -23,7 +23,17 @@
 			</div>
 
 			<div v-else>
-				<search-list :data-list='searchResult'></search-list>
+				<div v-if='searchFlag'>
+					<search-list :data-list='searchResult'></search-list>
+				</div>
+				<template v-else-if="historyKeys.length">
+				<ul class="searchHis">
+					<template  v-for="(key, index) in historyKeys">
+						<li @click="emitKeyword">{{historyKeys[index]}} <i></i></li>
+					</template>
+					<li class="clearHis" @click='clearHis'>清除搜索记录</li>
+				</ul>
+				</template>
 			</div>
 	    </div>
 	</div>
@@ -32,15 +42,17 @@
 <script>
 	import HeadComp from '../../components/header/index'
 	import SearchList from '../../components/search-list'
+	import LocalStorage from '../../localStorage'
 
 	export default {
 		data () {
 			return {
 				hotkeys: [], // 接口返回的热搜词列表
-				showHistory: false, // 搜索标志位，默认false 显示热搜词列表 true显示搜索历史记录
+				focusFlag: false, // 输入框获取标志位，默认false
+				searchFlag: false, // 显示搜索内容
+				historyKeys: [], // 历史搜索纪录
 				special_key: '',
 				keyword: '', // 用户输入的搜索词
-				hotKeysFlag: true, // 
 				searchResult: {}, // 搜索结果列表
 				showDel: false
 			}
@@ -51,13 +63,18 @@
 		},
 		methods: {
 			inputFocus: function() {
-				this.showHistory = true;
+				this.focusFlag = true;
+				this.historyKeys = LocalStorage.getArray("keywords");
 			},
       		search: function () {
 			    let _this = this;
+
 			    if (_this.keyword == '') {
 			        return ;
           		}
+
+          		LocalStorage.setArray("keywords", _this.keyword);
+          		
 		        this.$http.jsonp('https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp', {
 		          	params: {
 			            g_tk: 5381,
@@ -84,8 +101,8 @@
 					},
 					jsonp: 'jsonpCallback'
 		        }).then(function (response) {
-					console.log(response);
-					this.searchResult = response.body.data;
+					_this.searchResult = response.body.data;
+          			_this.searchFlag = true;
 		        })
 			},
 			checkKeyword: function () {
@@ -93,8 +110,15 @@
 			},
 			clearKeyword: function () {
 				this.keyword = '';
-				this.showHistory = false;
-			}
+				this.showDel = this.focusFlag = false;
+			},
+			clearHis: function() {
+				LocalStorage.clear();
+				this.searchFlag = false;
+			},
+		    emitKeyword: function (event) {
+		    	this.keyword = event.target.innerText;
+		    }
 		},
     	directives: {
 			focus: function (el) {
@@ -218,6 +242,26 @@
 		    	border-color: #fc4524;
 		    	color: #fc4524;
 		    }
+		}
+	}
+	.searchHis {
+		color: #000;
+		font-size: 0.7rem;
+		li {
+			background-color: #fff;
+			height: 2.2rem;
+			line-height: 2.2rem;
+			padding: 0 0.8rem;
+			border-bottom: 1px solid #e3e3e3;
+			&:last-child {
+				border: none;
+				margin-top: -1px;
+			}
+		}
+		.clearHis {
+			text-align: center;
+			color: #47c88a;
+			font-size: 0.6rem;
 		}
 	}
 </style>

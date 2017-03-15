@@ -1,7 +1,7 @@
 <template>
     <ul class="search-content">
         <template v-if='dataList.zhida.type == 2'>
-            <li>
+            <li class="flex-box">
                 <div class="flex-icon">
                     <img :src="src" alt="">
                 </div>
@@ -17,18 +17,20 @@
         <template v-for='item in dataList.song.list'>
             <li>
                 <router-link :to="{name: 'Playing', params: {songid: item.songid}}">
-                <div class="flex-icon">
-                    <i class="icon-music"></i>
-                </div>
-                <div class="music-info">
-                    <h3>{{item.songname}}</h3>
-                    <p>
-                        <template v-for='(singer, index) in item.singer'>
-                            <span v-if='index'>&nbsp;/&nbsp;</span>
-                            {{singer.name}}
-                        </template>
-                    </p>
-                </div>
+                    <div class="flex-box" @click='toPlay(item)'>
+                        <div class="flex-icon">
+                            <i class="icon-music"></i>
+                        </div>
+                        <div class="music-info">
+                            <h3>{{item.songname}}</h3>
+                            <p>
+                                <template v-for='(singer, index) in item.singer'>
+                                    <span v-if='index'>&nbsp;/&nbsp;</span>
+                                    {{singer.name}}
+                                </template>
+                            </p>
+                        </div>
+                    </div>
                 </router-link>
             </li>
         </template>
@@ -36,8 +38,9 @@
 </template>
 
 <script>
+import store from '../vuex/store'
 export default {
-    data() {
+    data () {
         return {
             
         }
@@ -48,8 +51,13 @@ export default {
             default: {}
         }
     },
+    render (createElement) {
+        return createElement('div', 'hello world');
+    },
     methods: {
-
+        toPlay: function(songInfo) {
+            store.commit('changeSong', songInfo);
+        }
     },
     computed: {
         src: function() {
@@ -62,14 +70,18 @@ export default {
 <style lang='less'>
     .search-content {
         font-size: 0.6rem;
-        color: #808080;
         background-color: #fff;
         li {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0.4rem;
+            a {
+                color: #808080;
+            }
+        }
+        .flex-box {
             display: -webkit-box;
             display: -webkit-flex;
             display: flex;
-            border-bottom: 1px solid #e5e5e5;
-            padding: 0.4rem;
         }
         .flex-icon {
             width: 2rem;
