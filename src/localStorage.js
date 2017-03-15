@@ -21,6 +21,7 @@ export default {
 			boundary = n || 10;
 		if (result.length > boundary) {
 			result = result.slice(0, boundary);
+			this.set(arr, result.join(',')); // 防止占用太多本地存储空间，并且过多数据处理起来性能更低
 		}
 		return result;
 	}

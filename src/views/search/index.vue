@@ -118,6 +118,7 @@
 			},
 		    emitKeyword: function (event) {
 		    	this.keyword = event.target.innerText;
+		    	this.showDel = true;
 		    }
 		},
     	directives: {
