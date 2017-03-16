@@ -8,9 +8,9 @@ import store from './vuex/store'
 Vue.use(vueResource)
 
 new Vue({
-  el: '#app',
-  store,
-  router,
-  template: '<App/>',
-  components: { App }
+	el: '#app',
+	store,
+	router,
+	template: '<App/>',
+	components: { App }
 })

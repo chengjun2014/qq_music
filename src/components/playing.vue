@@ -8,7 +8,7 @@
 				<img :src="pic" alt="" class="album-cover" :class="[isPlaying ? 'rotateAnim' : '']" ref="album">
 			</div>
 			<div class="info">
-				<h1 class="nowrap">{{playingsong.songname}}{{cTime}}</h1>
+				<h1 class="nowrap">{{playingsong.songname}}</h1>
 				<p>
 				<template v-for="item in playingsong.singer">{{item.name}}&nbsp;</template>
 				</p>
@@ -17,7 +17,7 @@
 		</div>
 
 	    <div class="lyc-wrap">
-	      	<lyc-item :lycArr="lycArr" :tiem="currentTime"></lyc-item>
+	      	<lyc-item :lycArr="lycArr" :currentTime="currentTime"></lyc-item>
 	    </div>
 
 	    <div class="controller">
@@ -47,13 +47,10 @@
 				isPlaying: true,
 		        pic: pic,
 		        lycArr: [],
-		        totalTime: song.interval,
-		        currentTime: 0
+		        currentTime: 0,
+		        timer: null
 			}
 		},
-	    watch: {
-
-	    },
 		components:{
 			Base64,
       		LycItem
@@ -61,10 +58,6 @@
 		computed: {
 			songUrl: function () {
 				return 'http://ws.stream.qqmusic.qq.com/'+this.songId+'.m4a?fromtag=46';
-			},
-			cTime: function() {
-				console.log('ctime', this.$refs, 123);
-				//return this.$refs.audio.currentTime;
 			}
 		},
 		props: {
@@ -72,14 +65,21 @@
 		},
 		methods: {
 			palyOrPause: function () {
-			    let audio = this.$refs.audio;
+			    let _this = this,
+			    	audio = this.$refs.audio;
+
 				if (this.isPlaying) {
           			audio.pause();
+          			clearInterval(this.timer);
 				} else {
           			audio.play();
+          			this.timer = setInterval(function(audio) {
+						return function() {
+							_this.currentTime = audio.currentTime;
+						}
+					}(audio), 500);
 				}
 				this.isPlaying = !this.isPlaying;
-				console.log(audio.duration, audio.currentTime, this.currentTime);
 			}
 		},
 		beforeMount () {
@@ -89,6 +89,7 @@
 			    let secArr = time.split('.'),
               		secArr2 = secArr[0].split(':'),
               		sec = +secArr2[0] * 60 + secArr2[1] * 1;
+
           		return sec + '.' + secArr[1]
       		}
 
@@ -112,20 +113,27 @@
               		})
 			});
 		},
-	    mounted() {
-			let len = this.lycArr.length - 1;
-			console.log(len)
-	    }
+		created () {
+		    var _this = this,
+		    	refs = _this.$refs;
+
+			this.timer = setInterval(function(refs) {
+				return function() {
+					_this.currentTime = refs.audio.currentTime;
+					// 需要检测歌曲播放完毕，清除定时器
+				}
+			}(refs), 500);
+		},
+		beforeDestroy() {
+			clearInterval(this.timer);
+		}
 	}
 </script>
 
 <style lang='less'>
-  html, body {
-    height: 100%;
-  }
-  .song-wrap {
-
-  }
+	html, body {
+		height: 100%;
+	}
 	.song-bg {
 		position: fixed;
 		top: 0;
@@ -206,37 +214,36 @@
 		}
 	}
 
-  .lyc-wrap {
-    position: fixed;
-    top:5.5rem;
-    bottom: 8rem;
-    width: 100%;
-    z-index: 10;
-    color: rgba(255,255,255,.6);
-    text-align: center;
-    line-height: 2rem;
-    font-size: 0.8rem;
-    -webkit-box-flex: 1;
-    overflow: hidden;
-    display: flex;
-    display: -webkit-box;
-    -webkit-box-align: center;
+	.lyc-wrap {
+		position: fixed;
+		top:5.5rem;
+		bottom: 8rem;
+		width: 100%;
+		z-index: 10;
+		color: rgba(255,255,255,.6);
+		text-align: center;
+		line-height: 2rem;
+		font-size: 0.8rem;
+		-webkit-box-flex: 1;
+		overflow: hidden;
+		display: flex;
+		display: -webkit-box;
+		-webkit-box-align: center;
+	}
 
-  }
+	.rotateAnim {
+		animation: mymove 4s infinite linear;
+	}
 
-  .rotateAnim {
-  	animation: mymove 4s infinite linear;
-  }
-
-  .controller {
-    height: 8rem;
-    position: fixed;
-    bottom: 0;
-    z-index: 2;
-    width: 100%;
-    box-sizing: border-box;
-    background: rgba(0,0,0,0.3);
-  }
+	.controller {
+		height: 8rem;
+		position: fixed;
+		bottom: 0;
+		z-index: 2;
+		width: 100%;
+		box-sizing: border-box;
+		background: rgba(0,0,0,0.3);
+	}
 
 @keyframes mymove{
 	0% {transform:rotate(0deg);}

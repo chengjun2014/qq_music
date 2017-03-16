@@ -105,6 +105,5 @@
 				vertical-align: middle;
 			}
 		}
-
 	}
 </style>

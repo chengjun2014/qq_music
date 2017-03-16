@@ -73,7 +73,7 @@
 			        return ;
           		}
 
-          		LocalStorage.setArray("keywords", _this.keyword);
+          		LocalStorage.pushArray("keywords", _this.keyword);
           		
 		        this.$http.jsonp('https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp', {
 		          	params: {
@@ -114,6 +114,7 @@
 			},
 			clearHis: function() {
 				LocalStorage.clear();
+				this.historyKeys = LocalStorage.getArray("keywords");
 				this.searchFlag = false;
 			},
 		    emitKeyword: function (event) {

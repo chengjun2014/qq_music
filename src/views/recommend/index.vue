@@ -17,7 +17,7 @@
 			<li v-for="radio in radioList">
 				<div>
 					<div class="radio-img-wrap rel">
-						<img :src="radio.picUrl" class="cover-img" alt="" />
+						<img :src="radio.picUrl" class="cover-img" alt="" onerror="javascript:this.src='https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/default_pic.jpg';" />
 						<span class="icon-play"></span>
 					</div>
 					<p class="radio-name">{{radio.Ftitle}}</p>

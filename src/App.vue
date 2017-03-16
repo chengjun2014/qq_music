@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div id="app">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -12,34 +12,34 @@ export default {
 
 <style lang="less">
 html{
-  font-size: 20px;
+    font-size: 20px;
 }
 body, h1, h2, h3, p {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 li {
-  list-style: none;
+    list-style: none;
 }
 .f-fl {
-  float: left;
+    float: left;
 }
 .f-fr {
-  float: right;
+    float: right;
 }
 .f-cb {
-  display: block;
-  zoom: 1;
-  &:after {
-      content: "";
-      display: block;
-      font-size: 0;
-      height: 0;
-      clear: both;
-      visibility: hidden;
-  }
+    display: block;
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        font-size: 0;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
 }
 </style>
