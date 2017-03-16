@@ -32,9 +32,9 @@ npm run build --report
 
 搜索历史去重／排序
 
-自定义｀localstorage｀方法，添加／删除／清空数据；
+自定义 `localstorage` 方法，添加／删除／清空数据；
 
-优化｀localstorage｀可存／取数组类型（通过序列化和反序列化）
+优化 `localstorage` 可存／取数组类型（通过序列化和反序列化）
 
 
 > 个人闲暇时间里做的，希望跟大家共同进步————持续更新／优化
@@ -47,7 +47,7 @@ npm run build --report
 
 ## 优点
 
-用到了比较新且全面的`Vue`相关的技术栈，
+用到了比较新且全面的 `Vue` 相关的技术栈，
 
 1. "vue": "^2.1.10",
 2. "vue-awesome-swiper": "^2.3.2",
@@ -62,7 +62,6 @@ npm run build --report
 ![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
 
 
-![image](https://github.com/chengjun2014/qq_music/blob/master/playing.gif)
 
 
 
