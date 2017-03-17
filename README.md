@@ -1,4 +1,4 @@
-# 一个假的qq音乐demo qq_music_spa
+# 一个假的qq音乐Vue SPA qq_music
 
 > 我可能做了一个假的qq音乐demo， 本demo参考`https://y.qq.com`开发的，难怪跟网上其他人的案例界面不一样。。。Orz
 
@@ -58,7 +58,7 @@ npm run build --report
 代码格式比较整齐（换过一次IDE，可能个别文件缩紧不统一，见到时候会调整回来）
 
 
-## 案例截图（早期的截图——功能不完善——具体效果大家自己在本地clone代码运行）
+## 案例截图（gif图片放到线上有点卡，如果新看的更流畅可以吧这个图片下载到你本地打开）
 ![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
 
 

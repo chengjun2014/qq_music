@@ -89,6 +89,7 @@
 <style lang="less">
 	#app {
 		background-color: #f4f4f4;
+		height: 100%;
 	}
 	ul {
 		margin: 0;

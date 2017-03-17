@@ -39,7 +39,7 @@ export default {
                 this.curIndex++;
             }
 
-            if (this.curIndex > 3 && this.curIndex < this.lycArr.length - 4) {
+            if (this.curIndex > 3 && this.curIndex < this.lycArr.length - 5) {
                 this.top = (3 - this.curIndex) * 2 + 'rem';
             }
         }
@@ -49,7 +49,7 @@ export default {
 
 <style lang='less'>
 .lyc {
-    height: 16rem;
+    height: 18rem;
     width: 100%;
     overflow: hidden;
     position: relative;

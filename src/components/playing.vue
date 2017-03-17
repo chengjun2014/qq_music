@@ -21,7 +21,7 @@
 	    </div>
 
 	    <div class="controller">
-
+			<play-progress :currentTime="currentTime" :totalTime="totalTime"></play-progress>
 	    </div>
 	</div>
 </template>
@@ -30,6 +30,7 @@
 	import Base64 from '../base64'
 	import store from '../vuex/store'
   	import LycItem from './lyc-item'
+  	import PlayProgress from './play-progress'
 
 	export default {
 		data () {
@@ -48,12 +49,14 @@
 		        pic: pic,
 		        lycArr: [],
 		        currentTime: 0,
+		        totalTime: song.interval,
 		        timer: null
 			}
 		},
 		components:{
 			Base64,
-      		LycItem
+      		LycItem,
+      		PlayProgress
 		},
 		computed: {
 			songUrl: function () {
@@ -76,6 +79,11 @@
           			this.timer = setInterval(function(audio) {
 						return function() {
 							_this.currentTime = audio.currentTime;
+							if (_this.currentTime >= _this.totalTime) {
+								clearInterval(_this.timer);
+								this.isPlaying = !this.isPlaying;
+							}
+							// 需要检测歌曲播放完毕，清除定时器
 						}
 					}(audio), 500);
 				}
@@ -104,7 +112,7 @@
               		.slice(7)
               		.map(function(str) {
 		                var t = str.split(']');
-		                if (t[1].length > 1) {
+		                if (t[1].length > 2) {
 		                    _this.lycArr.push({
 		                        time: getTime(t[0]),
 		                        lyc: t[1]
@@ -120,6 +128,9 @@
 			this.timer = setInterval(function(refs) {
 				return function() {
 					_this.currentTime = refs.audio.currentTime;
+					if (_this.currentTime >= _this.totalTime) {
+						clearInterval(_this.timer);
+					}
 					// 需要检测歌曲播放完毕，清除定时器
 				}
 			}(refs), 500);
@@ -236,7 +247,8 @@
 	}
 
 	.controller {
-		height: 8rem;
+		padding-top: 1rem;
+		height: 4rem;
 		position: fixed;
 		bottom: 0;
 		z-index: 2;
