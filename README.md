@@ -59,6 +59,9 @@ npm run build --report
 
 
 ## 案例截图（gif图片放到线上有点卡，如果新看的更流畅可以吧这个图片下载到你本地打开）
+
+![image](https://github.com/chengjun2014/qq_music/blob/master/playing.png)
+
 ![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
 
 
