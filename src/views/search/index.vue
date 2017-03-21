@@ -155,7 +155,7 @@
 		display: -webkit-box;
 	    display: -webkit-flex;
 	    display: flex;
-	    padding: 0.5rem 0;
+	    padding: 0.5rem;
 		form {
 			background-color: #fff;
 			position: relative;

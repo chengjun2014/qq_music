@@ -9,10 +9,10 @@
 npm install
 
 # serve with hot reload at localhost:8080 启动服务
-npm run dev
+npm run dev （会自动启动浏览器运行项目）
 
 # build for production with minification
-npm run build
+npm run build （对这里已经优化了配置文件使 build 生成的文件可以在本地查看，或作为静态页面线上预览）
 
 # build for production and view the bundle analyzer report
 npm run build --report
@@ -20,13 +20,13 @@ npm run build --report
 ```
 ## 功能实现
 
-首页：banner滚动效果实现，电台下级页面未接入（配的活动页或列表页，情况太复杂后续优化）
+首页：banner滚动效果实现，电台下级页面未接入（配的活动页或列表页，情况太复杂没有固定的借口）
 
 排行榜：完成榜单列表和榜单歌曲list，并可播放榜单歌曲
 
-搜索页：手动搜索功能完成，推荐热搜词未添加搜索入口
+搜索页：搜索功能完成，并完成歌声的个人页面
 
-播放页：歌曲正常播放，歌词同步高亮／滚动
+播放页：歌曲正常播放，歌词同步高亮／滚动；未做播单／播放控制以及歌曲列表播放
 
 搜索结果页：搜索结果正常显示／跳转到对应播放页面
 
