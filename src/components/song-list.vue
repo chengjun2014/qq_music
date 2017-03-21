@@ -3,20 +3,19 @@
 		<h3 class="song-list-no">{{listindex + 1}}</h3>
 		<router-link :to="{name: 'Playing', params: {songid: listdata.songid}}" class="song-list-cont">
 			<div @click='toPlay(listdata)'>
-			<p class="song-name nowrap">{{listdata.songname}}</p>
-			
-			
-			<p class="song-info nowrap">
-				<template v-for='(item, index) in listdata.singer'>
-					<span v-if='index > 0'>&nbsp;/&nbsp;</span>{{item.name}}
-				</template>
-				<span class="icon icon-point"></span>
-				{{listdata.albumname}}
-				<template v-if='listdata.albumdesc'>
+				<p class="song-name nowrap">{{listdata.songname}}</p>
+				
+				<p class="song-info nowrap">
+					<template v-for='(item, index) in listdata.singer'>
+						<span v-if='index > 0'>&nbsp;/&nbsp;</span>{{item.name}}
+					</template>
 					<span class="icon icon-point"></span>
-					{{listdata.albumdesc}}
-				</template>
-			</p>
+					{{listdata.albumname}}
+					<template v-if='listdata.albumdesc'>
+						<span class="icon icon-point"></span>
+						{{listdata.albumdesc}}
+					</template>
+				</p>
 			</div>
 		</router-link>
 	</li>

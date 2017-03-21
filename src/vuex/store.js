@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import header from '../components/header/index'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -23,8 +22,5 @@ export default new Vuex.Store({
 		getSong (state, getters) {
 			return state.curSong;
 		}
-	},
-	modules: {
-		header
 	}
 })

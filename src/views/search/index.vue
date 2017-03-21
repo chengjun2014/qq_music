@@ -15,9 +15,9 @@
 			<div class="hot-keys" v-if="focusFlag == false">
 				<h3 class="hot-title">热门搜索</h3>
 				<div class="hot-wrap">
-					<a href="" class="highlight" v-if="special_key">{{special_key}}</a>
+					<span @click="emitKeyword" class="highlight" v-if="special_key">{{special_key}}</span>
 					<template v-for="(item, index) in hotkeys">
-						<a href="" v-if="item.k.length > 4">{{item.k}}</a>
+						<span @click="emitKeyword" v-if="item.k.length > 4">{{item.k}}</span>
 					</template>
 				</div>
 			</div>
@@ -119,7 +119,7 @@
 			},
 		    emitKeyword: function (event) {
 		    	this.keyword = event.target.innerText;
-		    	this.showDel = true;
+		    	this.showDel = this.focusFlag =true;
 		    }
 		},
     	directives: {
@@ -230,7 +230,7 @@
 			margin-bottom: 0.5rem;
 			color: rgba(0, 0, 0, 0.6);
 		}
-		a {
+		span {
 			color: #000;
 			display: inline-block;
 			height: 1.5rem;

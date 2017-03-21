@@ -3,7 +3,7 @@
 		<div class="header rel">
 			<img :src="topinfo.pic_album" alt="" class="header-bg">
 			{{transferColor}}
-			<div class="album-mask"></div>
+			<div class="album-mask" :style="{color: color}"></div>
 			<div class="album-info">
 				<div class="album-title">
 					<h1 class="nowrap">{{topinfo.ListName}}</h1>
@@ -38,7 +38,7 @@
 			transferColor: function() {
 				var t = this.color;
 				function n(t) {
-					return t > 16 ? t.toString(16) : "0" + t.toString(16)
+					return t > 16 ? t.toString(16) : "0" + t.toString(16);
 				}
 				if (t) {
 					var o = (16711680 & t) >> 16, a = (65280 & t) >> 8, i = 255 & t;
@@ -48,6 +48,7 @@
 				} else {
 					this.color = '#000';
 				}
+				return this.color;
 			}
 		},
 		components: {

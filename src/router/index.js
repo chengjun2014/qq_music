@@ -4,7 +4,8 @@ import Recommend from 'views/recommend/index'
 import Rank from 'views/rank/index'
 import ListDetail from 'views/rank/detail'
 import Search from 'views/search/index'
-import Playing from 'components/playing'
+import Playing from 'views/playing'
+import Singer from 'views/singer-page'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
       name: 'Playing',
       path: '/playing/:songid',
       component: Playing
+    },
+    {
+      name: 'Singer',
+      path: '/singer/:singerid',
+      component: Singer
     }
   ]
 })

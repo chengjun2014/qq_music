@@ -38,8 +38,7 @@ export default {
     },
     watch: {
         currentTime: function(newNum, oldNum) {
-            //this.width = Math.ceil(newNum *100 / this.totalTime);
-            this.width = newNum *100 / this.totalTime; // 不ceil效果更平滑，如丝般顺滑
+            this.width = newNum *100 / this.totalTime;
         }
     }
 }

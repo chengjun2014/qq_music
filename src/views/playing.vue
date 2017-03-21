@@ -29,8 +29,8 @@
 <script>
 	import Base64 from '../base64'
 	import store from '../vuex/store'
-  	import LycItem from './lyc-item'
-  	import PlayProgress from './play-progress'
+  	import LycItem from '../components/lyc-item'
+  	import PlayProgress from '../components/play-progress'
 
 	export default {
 		data () {
@@ -98,7 +98,7 @@
               		secArr2 = secArr[0].split(':'),
               		sec = +secArr2[0] * 60 + secArr2[1] * 1;
 
-          		return sec + '.' + secArr[1]
+          		return sec + '.' + secArr[1];
       		}
 
       		let _this = this;

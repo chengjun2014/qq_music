@@ -1,17 +1,19 @@
 <template>
     <ul class="search-content">
         <template v-if='dataList.zhida.type == 2'>
-            <li class="flex-box">
-                <div class="flex-icon">
-                    <img :src="src" alt="">
-                </div>
-                <div class="music-info">
-                    <h3>{{dataList.zhida.singername}}</h3>
-                    <p>
-                        单曲：{{dataList.zhida.songnum}}
-                        专辑：{{dataList.zhida.albumnum}}
-                    </p>
-                </div>
+            <li>
+                <router-link class="flex-box" :to="{name: 'Singer', params: {singerid: dataList.zhida.singermid}}">
+                    <div class="flex-icon">
+                        <img :src="src" alt="">
+                    </div>
+                    <div class="music-info">
+                        <h3>{{dataList.zhida.singername}}</h3>
+                        <p>
+                            单曲：{{dataList.zhida.songnum}}
+                            专辑：{{dataList.zhida.albumnum}}
+                        </p>
+                    </div>
+                </router-link>
             </li>
         </template>
         <template v-for='item in dataList.song.list'>
@@ -51,8 +53,8 @@ export default {
             default: {}
         }
     },
-    render (createElement) {
-        return createElement('div', 'hello world');
+    render () {
+        
     },
     methods: {
         toPlay: function(songInfo) {
