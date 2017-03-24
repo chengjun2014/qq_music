@@ -78,12 +78,12 @@
           			audio.play();
           			this.timer = setInterval(function(audio) {
 						return function() {
-							_this.currentTime = audio.currentTime;
+							_this.currentTime = refs.audio.currentTime;
+							
 							if (_this.currentTime >= _this.totalTime) {
+								_this.isPlaying = false;
 								clearInterval(_this.timer);
-								this.isPlaying = !this.isPlaying;
 							}
-							// 需要检测歌曲播放完毕，清除定时器
 						}
 					}(audio), 500);
 				}
@@ -121,21 +121,22 @@
               		})
 			});
 		},
-		created () {
+		mounted () {
 		    var _this = this,
 		    	refs = _this.$refs;
-
+			
 			this.timer = setInterval(function(refs) {
 				return function() {
 					_this.currentTime = refs.audio.currentTime;
+					
 					if (_this.currentTime >= _this.totalTime) {
+						_this.isPlaying = false;
 						clearInterval(_this.timer);
 					}
-					// 需要检测歌曲播放完毕，清除定时器
 				}
 			}(refs), 500);
 		},
-		beforeDestroy() {
+		beforeDestroy () {
 			clearInterval(this.timer);
 		}
 	}

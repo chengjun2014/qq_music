@@ -1,19 +1,19 @@
 <template>
 	<div>
 		<div class="header rel">
-			<img :src="topinfo.pic_album" alt="" class="header-bg">
-			{{transferColor}}
-			<div class="album-mask" :style="{color: color}"></div>
+			<img :src="topinfo.pic_album" :alt="topinfo.ListName" class="header-bg">
+			
+			<div class="album-mask" :style="{color: transferColor}"></div>
 			<div class="album-info">
 				<div class="album-title">
 					<h1 class="nowrap">{{topinfo.ListName}}</h1>
 					<p class="nowrap">{{update_time}}&nbsp;更新</p>
 				</div>
-				<div class="album-play"></div>
+				<div class="album-play" @click="toPlay"></div>
 			</div>
 		</div>
 
-		<ul class="list" :style="{backgroundColor: color}">
+		<ul class="list" :style="{backgroundColor: transferColor}">
 			<template v-for="(list, index) in songlist">
 				<song-list :listdata="list.data" :listindex="index"></song-list>
 			</template>
@@ -23,6 +23,8 @@
 
 <script>
 	import SongList from '../../components/song-list'
+	import router from '../../router'
+	import store from '../../vuex/store'
 
 	export default {
 		data () {
@@ -34,9 +36,22 @@
 	        update_time: ''
 	      }
 	    },
+	    methods: {
+	    	toPlay: function() {
+	    		let _song = this.songlist[0].data;
+            	store.commit('changeSong', _song);
+
+	    		router.push({
+	    			name: 'Playing',
+	    			params: {
+	    				songid: _song.songid
+	    			}
+	    		});
+	    	}
+	    },
 		computed: {
 			transferColor: function() {
-				var t = this.color;
+				var t = this.color, computedColor;
 				function n(t) {
 					return t > 16 ? t.toString(16) : "0" + t.toString(16);
 				}
@@ -44,11 +59,11 @@
 					var o = (16711680 & t) >> 16, a = (65280 & t) >> 8, i = 255 & t;
 
 					var s = n(o) + n(a) + n(i);
-					this.color = '#' + s;
+					computedColor = '#' + s;
 				} else {
-					this.color = '#000';
+					computedColor = '#000';
 				}
-				return this.color;
+				return computedColor;
 			}
 		},
 		components: {
@@ -134,6 +149,7 @@
 				height: 2rem;
 				background: url(../../assets/list_sprite.png);
 				background-size: cover;
+				cursor: pointer;
 			}
 		}
 	}

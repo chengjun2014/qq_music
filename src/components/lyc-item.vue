@@ -17,14 +17,8 @@ export default {
         }
     },
     props: {
-        lycArr: {
-            type: Array,
-            default: []
-        },
-        currentTime: {
-            type: Number,
-            default: 0
-        }
+        lycArr: Array,
+        currentTime: Number
     },
     methods: {
 
@@ -35,7 +29,7 @@ export default {
                 return;
             }
 
-            if(newNum >= this.lycArr[this.curIndex + 1]['time']) {
+            if(this.lycArr[this.curIndex + 1] && newNum >= this.lycArr[this.curIndex + 1]['time']) {
                 this.curIndex++;
             }
 

@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import Util from '../utils'
-
 export default {
     data() {
         return {
@@ -18,14 +16,8 @@ export default {
         }
     },
     props: {
-        currentTime: {
-            type: Number,
-            default: 0
-        },
-        totalTime: {
-            type: Number,
-            default: 0
-        }
+        currentTime: Number,
+        totalTime: Number
     },
     filters: {
         sec2Time: function(sec) {

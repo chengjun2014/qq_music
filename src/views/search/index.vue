@@ -5,7 +5,7 @@
 			<form>
 				<span class="icon icon-search"></span>
 				<input class="key-word" type="text" @focus='inputFocus' 
-					@keyup='checkKeyword' placeholder="搜索歌曲、歌单、专辑" v-model="keyword">
+					@keyup='checkKeyword' placeholder="搜索歌曲、歌单、专辑" v-model.trim="keyword" @keyup.enter='search'>
 				<span class="icon icon-del" @click="clearKeyword" v-show='showDel'></span>
 			</form>
 			<div class="search-btn" @click="search" v-show="focusFlag">搜索</div>
@@ -114,19 +114,15 @@
 			},
 			clearHis: function() {
 				LocalStorage.clear();
-				this.historyKeys = LocalStorage.getArray("keywords");
+				this.historyKeys = '';
 				this.searchFlag = false;
 			},
 		    emitKeyword: function (event) {
 		    	this.keyword = event.target.innerText;
 		    	this.showDel = this.focusFlag =true;
+		    	this.search();
 		    }
 		},
-    	directives: {
-			focus: function (el) {
-				el.focus();
-			}
-	    },
 		beforeMount () {
 			this.$http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg', {
 			    params: {
