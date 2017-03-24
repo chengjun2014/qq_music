@@ -17,7 +17,9 @@
 		</div>
 
 	    <div class="lyc-wrap">
-	      	<lyc-item :lycArr="lycArr" :currentTime="currentTime"></lyc-item>
+	    	<transition name="fade" mode="out-in">
+	      		<lyc-item :lycArr="lycArr" :currentTime="currentTime"></lyc-item>
+	      	</transition>
 	    </div>
 
 	    <div class="controller">
@@ -38,7 +40,6 @@
           		pic = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
       		
 			return {
-				songId: this.$route.params.songid,
 				playingsong: song,
 				bodyStyle: {
 					color: '#f30',
@@ -60,7 +61,7 @@
 		},
 		computed: {
 			songUrl: function () {
-				return 'http://ws.stream.qqmusic.qq.com/'+this.songId+'.m4a?fromtag=46';
+				return 'http://ws.stream.qqmusic.qq.com/'+this.playingsong.songid+'.m4a?fromtag=46';
 			}
 		},
 		props: {
@@ -103,7 +104,7 @@
 
       		let _this = this;
 
-			this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.songId , {
+			this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.playingsong.songid , {
 			  	jsonp: 'callback'
 			})
 			.then(function (response) {

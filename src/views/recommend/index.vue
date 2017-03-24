@@ -4,7 +4,7 @@
 	<div id="main">
 		<swiper class="my-swipe">
 		  <swiper-slide class="silde" v-for="item in sliderData" :key="item.alt">
-		    <a v-bind:href="item.href">
+		    <a :href="item.href">
 		      <img :src="item.src ":alt="item.alt" />
 		    </a>
 		  </swiper-slide>
@@ -41,8 +41,6 @@
 <script>
 	import HeadComp from '../../components/header/index'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
-	import { mapGetters } from 'vuex'
 
 	export default {
 		data () {
