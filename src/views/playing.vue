@@ -70,7 +70,8 @@
 		methods: {
 			palyOrPause: function () {
 			    let _this = this,
-			    	audio = this.$refs.audio;
+			    	refs = _this.$refs,
+			    	audio = refs.audio;
 
 				if (this.isPlaying) {
           			audio.pause();
