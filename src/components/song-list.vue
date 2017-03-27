@@ -38,6 +38,7 @@
 		methods: {
 			toPlay: function(songInfo) {
 				store.commit('changeSong', songInfo);
+				store.commit('changeSongIndex', this.listindex);
 			}
 		}
 	}

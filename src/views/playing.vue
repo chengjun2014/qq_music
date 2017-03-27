@@ -23,6 +23,7 @@
 	    </div>
 
 	    <div class="controller">
+	    	
 			<play-progress :currentTime="currentTime" :totalTime="totalTime"></play-progress>
 	    </div>
 	</div>
@@ -51,7 +52,8 @@
 		        lycArr: [],
 		        currentTime: 0,
 		        totalTime: song.interval,
-		        timer: null
+		        timer: null,
+		        playList: null
 			}
 		},
 		components:{
@@ -125,8 +127,11 @@
 		},
 		mounted () {
 		    var _this = this,
-		    	refs = _this.$refs;
-			
+		    	refs = _this.$refs,
+		    	_store = store;
+
+			this.playList = _store.state.songList;
+
 			this.timer = setInterval(function(refs) {
 				return function() {
 					_this.currentTime = refs.audio.currentTime;
@@ -134,6 +139,13 @@
 					if (_this.currentTime >= _this.totalTime) {
 						_this.isPlaying = false;
 						clearInterval(_this.timer);
+
+						var _index = _store.state.songIndex;
+						if (_index + 1 >= _store.state.songList.length) {
+							_index = 0;
+						}
+						_store.commit('changeSongIndex', _index);
+						_this.playingsong = _store.getters.getSongByIndex;
 					}
 				}
 			}(refs), 500);
@@ -230,7 +242,7 @@
 
 	.lyc-wrap {
 		position: fixed;
-		top:5.5rem;
+		top: 5.5rem;
 		bottom: 8rem;
 		width: 100%;
 		z-index: 10;
@@ -246,23 +258,21 @@
 	}
 
 	.rotateAnim {
-		animation: mymove 4s infinite linear;
+		animation: imgRorate 4s infinite linear;
 	}
 
 	.controller {
-		padding-top: 1rem;
-		height: 4rem;
 		position: fixed;
 		bottom: 0;
-		z-index: 2;
+		z-index: 11;
 		width: 100%;
 		box-sizing: border-box;
-		background: rgba(0,0,0,0.3);
+		background: rgba(0,0,0,0.4);
 	}
 
-@keyframes mymove{
-	0% {transform:rotate(0deg);}
-	50% {transform:rotate(180deg);}
-	100% {transform:rotate(360deg);}
+@keyframes imgRorate{
+	0% {transform: rotate(0deg);}
+	50% {transform: rotate(180deg);}
+	100% {transform: rotate(360deg);}
 }
 </style>

@@ -91,6 +91,7 @@
 			  	this.topinfo = response.body.topinfo;
 			  	this.color = response.body.color;
 			  	this.update_time = response.body.update_time;
+				store.commit('changeSongList', this.songlist.slice(0, 50));
 			})
 		}
 	}

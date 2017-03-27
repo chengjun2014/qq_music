@@ -5,7 +5,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		curTab: 0,
-		curSong: ''
+		curSong: '',
+		songIndex: 0,
+		songList: [],
 	},
 	mutations: {
 		changeTab (state, n) {
@@ -13,6 +15,12 @@ export default new Vuex.Store({
 		},
 		changeSong (state, song) {
 			state.curSong = song;
+		},
+		changeSongIndex (state, index) {
+			state.songIndex = index;
+		},
+		changeSongList (state, songList) {
+			state.songList = songList;
 		}
 	},
 	getters: {
@@ -21,6 +29,9 @@ export default new Vuex.Store({
 		},
 		getSong (state, getters) {
 			return state.curSong;
+		},
+		getSongByIndex (state, getters) {
+			return state.songList[state.songIndex];
 		}
 	}
 })
