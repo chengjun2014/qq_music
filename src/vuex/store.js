@@ -14,7 +14,7 @@ export default new Vuex.Store({
 			state.curTab = n;
 		},
 		changeSong (state, song) {
-			state.curSong = song || state.songList[index];
+			state.curSong = song;
 		},
 		changeSongIndex (state, index) {
 			state.songIndex = index;
@@ -31,7 +31,6 @@ export default new Vuex.Store({
 			return state.curSong;
 		},
 		getSongByIndex (state, getters) {
-			// state.curSong = state.songList[state.songIndex]
 			return state.songList[state.songIndex];
 		}
 	}
