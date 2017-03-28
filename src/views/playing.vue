@@ -23,7 +23,6 @@
 	    </div>
 
 	    <div class="controller">
-	    	
 			<play-progress :currentTime="currentTime" :totalTime="totalTime"></play-progress>
 	    </div>
 	</div>
@@ -140,8 +139,8 @@
 						_this.isPlaying = false;
 						clearInterval(_this.timer);
 
-						var _index = _store.state.songIndex;
-						if (_index + 1 >= _store.state.songList.length) {
+						var _index = _store.state.songIndex + 1;
+						if (_index >= _store.state.songList.length) {
 							_index = 0;
 						}
 						_store.commit('changeSongIndex', _index);

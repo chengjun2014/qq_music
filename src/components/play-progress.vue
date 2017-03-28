@@ -8,15 +8,17 @@
             <i class="icon icon-fav"></i>
         </div>
         <div class="songList" v-else>
-            <p>播放列表 <span>（{{list.length}}首）</span><i class="icon-back" @click="toggleFlag"></i></p>
+            <p>播放列表 <span>({{list.length}}首)</span><i class="icon-back" @click="toggleFlag"></i></p>
             <ul>
                 <template v-for="(item, index) in list">
-                    <li :class='{"active": index == _index}'>{{item.data.songname}}</li>
+                    <li :class='{"active": index == _index}'>{{item.data.songname}}
+                        <b v-if="index == _index"><i></i><i></i><i></i><i></i></b>
+                    </li>
                 </template>
             </ul>
         </div>
     </div>
-
+    
     <div class="progress-wrap" v-if="showController">
         <div class="time">{{currentTime | sec2Time}}</div>
         <div class="play-progress">
@@ -65,6 +67,7 @@ export default {
 </script>
 
 <style lang='less'>
+
 .progress-wrap {
     display: -webkit-box;
     display: -webkit-flex;
@@ -107,6 +110,52 @@ export default {
     }
 }
 
+.active b {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+    width: 0.5rem;
+    height: 0.6rem;
+    overflow: hidden;
+}
+
+.active i {
+    float:left;
+    width: 1px;
+    height: 0.6rem;
+    margin-right: 0.1rem;
+    background-color: #31c27c;
+    animation: upAndDown 4s infinite linear;
+}
+
+.active i:nth-of-type(1) {
+    -webkit-animation-duration:800ms;
+}
+
+.active i:nth-of-type(2) {
+    -webkit-animation-duration:1200ms;
+}
+
+.active i:nth-of-type(3) {
+    -webkit-animation-duration:1400ms;
+}
+
+.active i:nth-of-type(4) {
+    margin-right:0;
+    -webkit-animation-duration:1000ms;
+}
+
+@keyframes upAndDown{
+    0% {transform: translateY(0);}
+    15% {transform: translateY(0.2rem);}
+    35% {transform: translateY(0.4rem);}
+    50% {transform: translateY(0.6rem);}
+    65% {transform: translateY(0.4rem);}
+    85% {transform: translateY(0.2rem);}
+    100% {transform: translateY(0);}
+}
+
+
 .controller-wrap {
     .row {
         display: -webkit-box;
@@ -138,8 +187,9 @@ export default {
     .songList {
         color: #fff;
         font-size: 0.7rem;
-        max-height: 14rem;
+        max-height: 13.8rem;
         padding: 0.5rem 0.75rem 0.75rem;
+        background-color: rgba(0, 0, 0, 0.55);
         p {
             line-height: 2rem;
             font-size: 0.9rem;
@@ -177,6 +227,7 @@ export default {
         }
         .active {
             color: #31c27c;
+            position: relative;
         }
     }
 }
