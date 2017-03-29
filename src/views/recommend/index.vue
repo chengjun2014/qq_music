@@ -2,12 +2,13 @@
 <div>
 	<head-comp></head-comp>
 	<div id="main">
-		<swiper class="my-swipe">
+		<swiper class="my-swipe" :options="swiperOption">
 		  <swiper-slide class="silde" v-for="item in sliderData" :key="item.alt">
 		    <a :href="item.href">
 		      <img :src="item.src ":alt="item.alt" />
 		    </a>
 		  </swiper-slide>
+		  <div class="swiper-pagination" slot="pagination"></div>
 		</swiper>
 	</div>
 
@@ -46,7 +47,15 @@
 		data () {
 	      return {
 	        sliderData: [],
-	        radioList: []
+	        radioList: [],
+	        swiperOption: {
+				autoplay: 3500,
+				setWrapperSize :true,
+				pagination : '.swiper-pagination',
+				paginationClickable :true,
+				mousewheelControl : true,
+				observeParents:true,
+			}
 	      }
 	    },
 		components: {
@@ -94,11 +103,17 @@
 		padding: 0;
 	}
 	#main {
+		.swiper-pagination {
+			bottom: 0;
+		}
 		.swiper-wrapper {
 			img {
 				width: 100%;
 				display: block;
 			}
+		}
+		.swiper-pagination-bullet-active {
+			background-color: #fff;
 		}
 		.product {
 			margin-top: 15px;
