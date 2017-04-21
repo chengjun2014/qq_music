@@ -31,23 +31,23 @@
 <script>
 	import Base64 from '../base64'
 	import store from '../vuex/store'
+	import router from '../router'
   	import LycItem from '../components/lyc-item'
   	import PlayProgress from '../components/play-progress'
 
 	export default {
 		data () {
       		let song = store.getters.getSong,
-          		pic = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
+          		picUrl = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
       		
 			return {
 				playingsong: song,
 				bodyStyle: {
 					color: '#f30',
-					backgroundImage: "url(" + pic + ")",
-					fontSize: '12px'
+					backgroundImage: "url(" + picUrl + ")"
 				},
 				isPlaying: true,
-		        pic: pic,
+		        pic: picUrl,
 		        lycArr: [],
 		        currentTime: 0,
 		        totalTime: song.interval,
@@ -61,8 +61,11 @@
       		PlayProgress
 		},
 		computed: {
+			picUrl: function() {
+				return 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + this.playingsong.albummid +'.jpg';
+			},
 			songUrl: function () {
-				return 'http://ws.stream.qqmusic.qq.com/'+this.playingsong.songid+'.m4a?fromtag=46';
+				return 'http://ws.stream.qqmusic.qq.com/' + this.playingsong.songid + '.m4a?fromtag=46';
 			}
 		},
 		props: {
@@ -91,43 +94,48 @@
 					}(audio), 500);
 				}
 				this.isPlaying = !this.isPlaying;
+			},
+			renderLyc: function() {
+				this.lycArr = [];
+				this.currentTime = 0;
+				console.log('renderLyc')
+				let getTime = function (time) {
+				    let secArr = time.split('.'),
+	              		secArr2 = secArr[0].split(':'),
+	              		sec = +secArr2[0] * 60 + secArr2[1] * 1;
+
+	          		return sec + '.' + secArr[1];
+	      		}
+
+	      		let _this = this;
+
+				this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.playingsong.songid , {
+				  	jsonp: 'callback'
+				}).then(function (response) {
+	          		Base64.decode(response.data.lyric)
+	              		.split('[')
+	              		.slice(7)
+	              		.map(function(str) {
+			                var t = str.split(']');
+			                if (t[1].length > 2) {
+			                    _this.lycArr.push({
+			                        time: getTime(t[0]),
+			                        lyc: t[1]
+			                    });
+			                }
+	              		});
+				});
 			}
 		},
 		beforeMount () {
 			this.playingsong = store.getters.getSong;
-
-			let getTime = function (time) {
-			    let secArr = time.split('.'),
-              		secArr2 = secArr[0].split(':'),
-              		sec = +secArr2[0] * 60 + secArr2[1] * 1;
-
-          		return sec + '.' + secArr[1];
-      		}
-
-      		let _this = this;
-
-			this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.playingsong.songid , {
-			  	jsonp: 'callback'
-			})
-			.then(function (response) {
-          		Base64.decode(response.data.lyric)
-              		.split('[')
-              		.slice(7)
-              		.map(function(str) {
-		                var t = str.split(']');
-		                if (t[1].length > 2) {
-		                    _this.lycArr.push({
-		                        time: getTime(t[0]),
-		                        lyc: t[1]
-		                    });
-		                }
-              		})
-			});
+			this.renderLyc();
 		},
 		mounted () {
 		    var _this = this,
 		    	refs = _this.$refs,
-		    	_store = store;
+		    	_store = store,
+		    	_router = router;
 
 			this.playList = _store.state.songList;
 
@@ -140,11 +148,26 @@
 						clearInterval(_this.timer);
 
 						var _index = _store.state.songIndex + 1;
+
 						if (_index >= _store.state.songList.length) {
 							_index = 0;
 						}
+
+						var playingsong = _store.state.songList[_index].data;
+						console.log(playingsong, '_store.getters.getSong.data');
+						_store.commit('changeSong', playingsong);
 						_store.commit('changeSongIndex', _index);
-						_this.playingsong = _store.getters.getSongByIndex;
+
+			    		_router.push({
+			    			name: 'Playing',
+			    			params: {
+			    				songid: playingsong.songid
+			    			}
+			    		});
+						
+						// 歌曲播放完成应该触发一个切换歌曲的事件，统一管理各个组件更新
+
+			    		//location.reload();
 					}
 				}
 			}(refs), 500);
