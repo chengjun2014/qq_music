@@ -98,7 +98,6 @@
 			renderLyc: function() {
 				this.lycArr = [];
 				this.currentTime = 0;
-				console.log('renderLyc')
 				let getTime = function (time) {
 				    let secArr = time.split('.'),
 	              		secArr2 = secArr[0].split(':'),
@@ -127,10 +126,6 @@
 				});
 			}
 		},
-		beforeMount () {
-			this.playingsong = store.getters.getSong;
-			this.renderLyc();
-		},
 		mounted () {
 		    var _this = this,
 		    	refs = _this.$refs,
@@ -154,11 +149,12 @@
 						}
 
 						var playingsong = _store.state.songList[_index].data;
-						console.log(playingsong, '_store.getters.getSong.data');
+						_this.playingsong = playingsong;
+						
 						_store.commit('changeSong', playingsong);
 						_store.commit('changeSongIndex', _index);
 
-			    		_router.push({
+			    		_router.replace({
 			    			name: 'Playing',
 			    			params: {
 			    				songid: playingsong.songid
@@ -167,7 +163,7 @@
 						
 						// 歌曲播放完成应该触发一个切换歌曲的事件，统一管理各个组件更新
 
-			    		//location.reload();
+			    		// location.reload();
 					}
 				}
 			}(refs), 500);
