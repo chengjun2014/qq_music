@@ -36,6 +36,10 @@ export default {
             if (this.curIndex > 3 && this.curIndex < this.lycArr.length - 5) {
                 this.top = (3 - this.curIndex) * 2 + 'rem';
             }
+        },
+        lycArr: function(lyc, oldlyc) {
+            this.top = 0;
+            this.curIndex = 0;
         }
     }
 }

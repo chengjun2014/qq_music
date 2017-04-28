@@ -51,11 +51,12 @@ export default {
         }
     },
     mounted: function() {
-        this._index = store.state.songIndex;
+        // this._index = store.state.songIndex;
     },
     methods: {
         toggleFlag: function() {
             this.showController = !this.showController;
+            this._index = store.state.songIndex;
         }
     },
     watch: {

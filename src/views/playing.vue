@@ -61,15 +61,23 @@
       		PlayProgress
 		},
 		computed: {
-			picUrl: function() {
+			pic: function() {
 				return 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + this.playingsong.albummid +'.jpg';
 			},
 			songUrl: function () {
 				return 'http://ws.stream.qqmusic.qq.com/' + this.playingsong.songid + '.m4a?fromtag=46';
+			},
+			bodyStyle: function() {
+				return {
+					color: '#f30', 
+					backgroundImage: "url(http://y.gtimg.cn/music/photo_new/T002R300x300M000" + this.playingsong.albummid + ".jpg)"
+				};
 			}
 		},
-		props: {
-
+		watch: {
+			playingsong: function(newsong, old) {
+				console.log(newsong, old, "newsong, old");
+			}
 		},
 		methods: {
 			palyOrPause: function () {
@@ -124,49 +132,61 @@
 			                }
 	              		});
 				});
+			},
+			scrollLyc: function() {
+			    var _this = this,
+			    	refs = _this.$refs,
+			    	_store = store,
+			    	_router = router;
+
+				this.timer = setInterval(function(refs) {
+					return function() {
+						_this.currentTime = refs.audio.currentTime;
+						
+						if (_this.currentTime >= _this.totalTime) {
+							_this.isPlaying = false;
+							clearInterval(_this.timer);
+
+							var _index = _store.state.songIndex + 1;
+
+							if (_index >= _store.state.songList.length) {
+								_index = 0;
+							}
+
+							var playingsong = _store.state.songList[_index].data;
+							_this.playingsong = playingsong;
+							
+							_store.commit('changeSong', playingsong);
+							_store.commit('changeSongIndex', _index);
+
+				    		_router.replace({
+				    			name: 'Playing',
+				    			params: {
+				    				songid: playingsong.songid
+				    			}
+				    		});
+							_this.renderLyc();
+							_this.currentTime = 0;
+							_this.scrollLyc();
+							
+							// 歌曲播放完成应该触发一个切换歌曲的事件，统一管理各个组件更新
+
+				    		// location.reload();
+						}
+					}
+				}(refs), 500);
 			}
 		},
+		beforeMount () {
+			this.playingsong = store.getters.getSong;
+			this.renderLyc();
+		},
 		mounted () {
-		    var _this = this,
-		    	refs = _this.$refs,
-		    	_store = store,
-		    	_router = router;
+		    var _store = store;
 
 			this.playList = _store.state.songList;
-
-			this.timer = setInterval(function(refs) {
-				return function() {
-					_this.currentTime = refs.audio.currentTime;
-					
-					if (_this.currentTime >= _this.totalTime) {
-						_this.isPlaying = false;
-						clearInterval(_this.timer);
-
-						var _index = _store.state.songIndex + 1;
-
-						if (_index >= _store.state.songList.length) {
-							_index = 0;
-						}
-
-						var playingsong = _store.state.songList[_index].data;
-						_this.playingsong = playingsong;
-						
-						_store.commit('changeSong', playingsong);
-						_store.commit('changeSongIndex', _index);
-
-			    		_router.replace({
-			    			name: 'Playing',
-			    			params: {
-			    				songid: playingsong.songid
-			    			}
-			    		});
-						
-						// 歌曲播放完成应该触发一个切换歌曲的事件，统一管理各个组件更新
-
-			    		// location.reload();
-					}
-				}
-			}(refs), 500);
+			this.scrollLyc();
+			
 		},
 		beforeDestroy () {
 			clearInterval(this.timer);
