@@ -43,7 +43,6 @@
 			return {
 				playingsong: song,
 				bodyStyle: {
-					color: '#f30',
 					backgroundImage: "url(" + picUrl + ")"
 				},
 				isPlaying: true,
@@ -76,10 +75,33 @@
 		},
 		watch: {
 			playingsong: function(newsong, old) {
-				console.log(newsong, old, "newsong, old");
+				
 			}
 		},
 		methods: {
+			changePlayingSong: function() {
+				var index = store.state.songIndex + 1;
+
+				if (index >= store.state.songList.length) {
+					index = 0;
+				}
+
+				var playingsong = store.state.songList[index].data;
+				this.playingsong = playingsong;
+				
+				store.commit('changeSong', playingsong);
+				store.commit('changeSongIndex', index);
+
+				router.replace({
+					name: 'Playing',
+					params: {
+						songid: playingsong.songid
+					}
+				});
+				this.renderLyc();
+				this.currentTime = 0;
+				this.scrollLyc();
+			},
 			palyOrPause: function () {
 			    let _this = this,
 			    	refs = _this.$refs,
@@ -95,8 +117,7 @@
 							_this.currentTime = refs.audio.currentTime;
 							
 							if (_this.currentTime >= _this.totalTime) {
-								_this.isPlaying = false;
-								clearInterval(_this.timer);
+								_this.changePlayingSong();
 							}
 						}
 					}(audio), 500);
@@ -144,34 +165,7 @@
 						_this.currentTime = refs.audio.currentTime;
 						
 						if (_this.currentTime >= _this.totalTime) {
-							_this.isPlaying = false;
-							clearInterval(_this.timer);
-
-							var _index = _store.state.songIndex + 1;
-
-							if (_index >= _store.state.songList.length) {
-								_index = 0;
-							}
-
-							var playingsong = _store.state.songList[_index].data;
-							_this.playingsong = playingsong;
-							
-							_store.commit('changeSong', playingsong);
-							_store.commit('changeSongIndex', _index);
-
-				    		_router.replace({
-				    			name: 'Playing',
-				    			params: {
-				    				songid: playingsong.songid
-				    			}
-				    		});
-							_this.renderLyc();
-							_this.currentTime = 0;
-							_this.scrollLyc();
-							
-							// 歌曲播放完成应该触发一个切换歌曲的事件，统一管理各个组件更新
-
-				    		// location.reload();
+							_this.changePlayingSong();
 						}
 					}
 				}(refs), 500);
@@ -182,11 +176,8 @@
 			this.renderLyc();
 		},
 		mounted () {
-		    var _store = store;
-
-			this.playList = _store.state.songList;
+			this.playList = store.state.songList;
 			this.scrollLyc();
-			
 		},
 		beforeDestroy () {
 			clearInterval(this.timer);
@@ -271,10 +262,10 @@
 		}
 
 		.play-icon {
-			background-position: 0 0;
+			background-position: 0 -2.2rem;
 		}
 		.pause-icon {
-			background-position: 0 -2.2rem;
+			background-position: 0 0;
 		}
 	}
 
