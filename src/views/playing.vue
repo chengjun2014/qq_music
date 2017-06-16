@@ -23,7 +23,7 @@
 	    </div>
 
 	    <div class="controller">
-			<play-progress :currentTime="currentTime" :totalTime="totalTime"></play-progress>
+			<play-progress :currentTime="currentTime" :totalTime="totalTime" v-on:switchSong='changePlayingSong'></play-progress>
 	    </div>
 	</div>
 </template>
@@ -37,19 +37,13 @@
 
 	export default {
 		data () {
-      		let song = store.getters.getSong,
-          		picUrl = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + song.albummid +'.jpg';
+      		let song = store.getters.getSong;
       		
 			return {
 				playingsong: song,
-				bodyStyle: {
-					backgroundImage: "url(" + picUrl + ")"
-				},
 				isPlaying: true,
-		        pic: picUrl,
 		        lycArr: [],
 		        currentTime: 0,
-		        totalTime: song.interval,
 		        timer: null,
 		        playList: null
 			}
@@ -61,16 +55,18 @@
 		},
 		computed: {
 			pic: function() {
-				return 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + this.playingsong.albummid +'.jpg';
+			 	return 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + this.playingsong.albummid +'.jpg';
 			},
-			songUrl: function () {
+			songUrl: function() {
 				return 'http://ws.stream.qqmusic.qq.com/' + this.playingsong.songid + '.m4a?fromtag=46';
 			},
 			bodyStyle: function() {
 				return {
-					color: '#f30', 
 					backgroundImage: "url(http://y.gtimg.cn/music/photo_new/T002R300x300M000" + this.playingsong.albummid + ".jpg)"
 				};
+			},
+			totalTime: function() {
+				return this.playingsong.interval;
 			}
 		},
 		watch: {
@@ -79,8 +75,8 @@
 			}
 		},
 		methods: {
-			changePlayingSong: function() {
-				var index = store.state.songIndex + 1;
+			changePlayingSong: function(num) {
+				var index = num;
 
 				if (index >= store.state.songList.length) {
 					index = 0;
@@ -102,7 +98,7 @@
 				this.currentTime = 0;
 				this.scrollLyc();
 			},
-			palyOrPause: function () {
+			palyOrPause: function() {
 			    let _this = this,
 			    	refs = _this.$refs,
 			    	audio = refs.audio;
@@ -117,7 +113,7 @@
 							_this.currentTime = refs.audio.currentTime;
 							
 							if (_this.currentTime >= _this.totalTime) {
-								_this.changePlayingSong();
+								_this.changePlayingSong(store.getters.getSongIndex + 1);
 							}
 						}
 					}(audio), 500);
@@ -125,8 +121,6 @@
 				this.isPlaying = !this.isPlaying;
 			},
 			renderLyc: function() {
-				this.lycArr = [];
-				this.currentTime = 0;
 				let getTime = function (time) {
 				    let secArr = time.split('.'),
 	              		secArr2 = secArr[0].split(':'),
@@ -137,9 +131,12 @@
 
 	      		let _this = this;
 
+				this.lycArr = [];
+				this.currentTime = 0;
+
 				this.$http.jsonp('https://api.darlin.me/music/lyric/' + this.playingsong.songid , {
 				  	jsonp: 'callback'
-				}).then(function (response) {
+				}).then(function(response) {
 	          		Base64.decode(response.data.lyric)
 	              		.split('[')
 	              		.slice(7)
@@ -165,7 +162,7 @@
 						_this.currentTime = refs.audio.currentTime;
 						
 						if (_this.currentTime >= _this.totalTime) {
-							_this.changePlayingSong();
+							_this.changePlayingSong(store.getters.getSongIndex + 1);
 						}
 					}
 				}(refs), 500);

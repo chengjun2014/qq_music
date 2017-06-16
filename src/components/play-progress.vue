@@ -11,7 +11,7 @@
             <p>播放列表 <span>({{list.length}}首)</span><i class="icon-back" @click="toggleFlag"></i></p>
             <ul>
                 <template v-for="(item, index) in list">
-                    <li :class='{"active": index == _index}'>{{item.data.songname}}
+                    <li :class='{"active": index == _index}' @click='changeSong' :songIndex="index">{{item.data.songname}}
                         <b v-if="index == _index"><i></i><i></i><i></i><i></i></b>
                     </li>
                 </template>
@@ -57,6 +57,15 @@ export default {
         toggleFlag: function() {
             this.showController = !this.showController;
             this._index = store.state.songIndex;
+        },
+        changeSong: function(e) {
+            var _node = e.target;
+            if (_node.getAttribute('class') != 'active') {
+                var index = _node.getAttribute("songIndex") - 0;
+                this._index = index;
+                this.$emit('switchSong', index);
+                this.showController = true;
+            }
         }
     },
     watch: {

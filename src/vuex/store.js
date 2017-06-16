@@ -30,6 +30,9 @@ export default new Vuex.Store({
 		getSong (state, getters) {
 			return state.curSong;
 		},
+		getSongIndex (state, getters) {
+			return state.songIndex;
+		},
 		getSongByIndex (state, getters) {
 			return state.songList[state.songIndex];
 		}
