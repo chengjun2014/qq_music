@@ -63,7 +63,7 @@ export default {
     },
     computed: {
         src: function() {
-            return "//y.gtimg.cn/music/photo_new/T001R68x68M000" + this.dataList.zhida.singermid + ".jpg"
+            return "http://y.gtimg.cn/music/photo_new/T001R68x68M000" + this.dataList.zhida.singermid + ".jpg"
         }
     }
 }
