@@ -66,7 +66,7 @@ action管理可以通过dispatch 或commit触发获取数据
 
 ### 切换到手机模式在浏览器里打开
 
-在线预览地址：[点击预览](https://chengjun2014.github.io/demo/qq_music/index.html){:target="_blank"}
+在线预览地址：[点击预览](https://chengjun2014.github.io/demo/qq_music/index.html)
 
 ![image](https://github.com/chengjun2014/qq_music/blob/master/playing.png)
 
