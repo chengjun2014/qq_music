@@ -62,12 +62,19 @@ action管理可以通过dispatch 或commit触发获取数据
 代码格式比较整齐（换过一次IDE，可能个别文件缩紧不统一，见到时候会调整回来）
 
 
-## 案例截图（截图是早期版本，最终完成效果以代码运行为准，建议clone代码到本地运行查看效果或源码）
+## 案例截图
+
+截图是早期版本，最终完成效果以代码运行为准，建议clone代码到本地运行查看效果或源码
+
 
 ### 切换到手机模式在浏览器里打开[点击预览](https://chengjun2014.github.io/demo/qq_music/index.html)
 
 
+
+
 ![image](https://github.com/chengjun2014/qq_music/blob/master/playing.png)
+
+
 
 ![image](https://github.com/chengjun2014/qq_music/blob/master/music.gif)
 
