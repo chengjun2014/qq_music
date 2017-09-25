@@ -5,7 +5,7 @@ import vueResource from 'vue-resource'
 import store from './vuex/store'
 //import axios from 'axios'
 
-Vue.use(vueResource)
+Vue.use(vueResource);
 
 new Vue({
 	el: '#app',

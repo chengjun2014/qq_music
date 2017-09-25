@@ -67,7 +67,7 @@ action管理可以通过dispatch 或commit触发获取数据
 截图是早期版本，最终完成效果以代码运行为准，建议clone代码到本地运行查看效果或源码
 
 
-### 切换到手机模式在浏览器里打开[点击预览](https://chengjun2014.github.io/demo/qq_music/index.html)
+### 切换到手机模式在浏览器里打开[点击预览](http://dabaipm.cn/qq_music/index.html)
 
 
 

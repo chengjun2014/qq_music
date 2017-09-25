@@ -7,9 +7,9 @@ import Search from 'views/search/index'
 import Playing from 'views/playing'
 import Singer from 'views/singer-page'
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
+var route = new Router({
   routes: [
     {
       path: '/',
@@ -46,3 +46,6 @@ export default new Router({
     }
   ]
 })
+
+
+export default route;
