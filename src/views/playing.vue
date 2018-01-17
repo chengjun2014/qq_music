@@ -58,7 +58,7 @@
 			 	return 'http://y.gtimg.cn/music/photo_new/T002R300x300M000' + this.playingsong.albummid +'.jpg';
 			},
 			songUrl: function() {
-				return 'http://dl.stream.qqmusic.qq.com/C400' + this.playingsong.songmid + '.m4a?guid=2313974775&vkey=4089D067F5ABDCE1F6242A8E97EFF9F23BDF84E7CBF09F7BBC79C06025869C3405ED038D62BD842B27E4DDD8CBC994F0009B4818FAA5016A';
+				return 'http://dl.stream.qqmusic.qq.com/C400' + this.playingsong.songmid + '.m4a?guid=2313974775&vkey=4089D067F5ABDCE1F6242A8E97EFF9F23BDF84E7CBF09F7BBC79C06025869C3405ED038D62BD842B27E4DDD8CBC994F0009B4818FAA5016A&uin=&fromtag=999';
 			},
 			bodyStyle: function() {
 				return {
