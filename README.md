@@ -2,6 +2,10 @@
 
 > 我可能做了一个假的qq音乐demo， 本demo参考`https://y.qq.com`开发的，难怪跟网上其他人的案例界面不一样。。。Orz
 
+## QQ音乐小程序版本
+
+项目地址：[查看](https://github.com/chengjun2014/wx_QQmusic)
+
 ## Build Setup
 
 ``` bash
