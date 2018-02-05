@@ -4,7 +4,7 @@
 
 ## QQ音乐小程序版本
 
-项目地址：[查看](https://github.com/chengjun2014/wx_QQmusic)
+**项目地址：**[查看](https://github.com/chengjun2014/wx_QQmusic)
 
 ## Build Setup
 
@@ -39,6 +39,8 @@ npm run build --report
 自定义 `localstorage` 方法，添加／删除／清空数据；
 
 优化 `localstorage` 可存／取数组类型（通过序列化和反序列化）
+
+父子模块间数据通信、交互事件相应（播放页面点击列表切换播放页当前播放歌曲，子组件事件传递给父组件）
 
 
 > 个人闲暇时间里做的————持续更新／优化
